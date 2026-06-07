@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PatientController extends Controller
 {
@@ -23,5 +24,22 @@ class PatientController extends Controller
 
     return "Patient Added Successfully";
 
+    }
+
+
+    public function view() {
+        $patients = DB::table('patients')->get();
+        return view("patients",["patient_data" => $patients]);
+    }
+
+
+    public function  fetch_data($id){
+        
+        $patient= DB::table('patients')
+            -> where('id', $id)
+            -> first();
+
+
+        return view('profile', ['data'=> $patient]);
     }
 }
